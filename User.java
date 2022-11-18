@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 public class User {
     private String nombre;
+    private String password;
+    private int score;
     private int nivel;
     private ArrayList<Problema> problemasCorrctos;
     private ArrayList<Problema> problemasIncorrctos;
@@ -10,14 +12,30 @@ public class User {
     public User() {
         problemasCorrctos = new ArrayList<Problema>();
         problemasIncorrctos = new ArrayList<Problema>();
+        nivel = 0;
+        nombre = "";
+        password = "";
+    }
+
+    public User(String nombre, String password) {
+        this.nombre = nombre;
+        this.password = password;
     }
 
     public User(String nombre, int nivel) {
         this.nombre = nombre;
         this.nivel = nivel;
-        this.problemasCorrctos = new ArrayList<Problema>();
-        this.problemasIncorrctos = new ArrayList<Problema>();
     }
+
+
+    public int getScore() {
+        return this.score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
 
     public String getNombre() {
         return this.nombre;
@@ -64,6 +82,34 @@ public class User {
 
     public void setProblemasIncorrctos(ArrayList<Problema> problemasIncorrctos) {
         this.problemasIncorrctos = problemasIncorrctos;
+    }
+
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    public User(String nombre, String password, int nivel, ArrayList<Problema> problemasCorrctos, ArrayList<Problema> problemasIncorrctos) {
+        this.nombre = nombre;
+        this.password = password;
+        this.nivel = nivel;
+        this.problemasCorrctos = problemasCorrctos;
+        this.problemasIncorrctos = problemasIncorrctos;
+    }
+
+    public User password(String password) {
+        setPassword(password);
+        return this;
+    }
+
+    public User problemasIncorrctos(ArrayList<Problema> problemasIncorrctos) {
+        setProblemasIncorrctos(problemasIncorrctos);
+        return this;
     }
 
     @Override

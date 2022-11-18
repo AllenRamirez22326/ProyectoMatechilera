@@ -1,7 +1,9 @@
-public class Prueba{
-    public static void main(String[] args) {
+import java.io.FileNotFoundException;
 
-        //Crear instancia de Juego y leer bases de datos
+public class Prueba{
+    public static void main(String[] args) throws FileNotFoundException {
+
+        /* //Crear instancia de Juego y leer bases de datos
         Juego juego = new Juego();
         juego.generarLista("prueba.csv");
         
@@ -43,7 +45,18 @@ public class Prueba{
         retroalmintacion.evaluarNivel(usuario);
 
         //Se realiza la retroalimentación respecto a la categoria con más correctas o más incorrectas
-        retroalmintacion.evaluarCategoria(usuario, true);
+        retroalmintacion.evaluarCategoria(usuario, true); */
+
+        Sesiones registro = new Sesiones();
+        /* if (registro.registrar("fernando88", "abcd")){
+            System.out.println("Gracias por registrarte");
+        }
+        else {
+            System.out.println("El usuario ya existe");
+        } */
+
+        System.out.println(registro.login("otrousuario", "22233"));
+ 
 
 
     }
