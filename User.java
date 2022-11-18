@@ -17,8 +17,10 @@ public class User {
         password = "";
     }
 
-    public User(String nombre, String password) {
+    public User(String nombre, int nivel, int score, String password) {
         this.nombre = nombre;
+        this.nivel = nivel;
+        this.score = score;
         this.password = password;
     }
 
@@ -27,6 +29,7 @@ public class User {
         this.nivel = nivel;
     }
 
+        
 
     public int getScore() {
         return this.score;

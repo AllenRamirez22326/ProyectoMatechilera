@@ -55,7 +55,7 @@ public class Prueba{
             System.out.println("El usuario ya existe");
         } */
 
-        System.out.println(registro.login("otrousuario", "22233"));
+        System.out.println(registro.login("fernando88", "sbcd"));
  
 
 
