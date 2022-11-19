@@ -18,18 +18,19 @@ import java.awt.Image;
 
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+import javax.swing.JTextArea;
 public class GUIInicio extends JFrame {
 	private boolean enviado;
 	private JPanel bg;
 	private JTextField respuestauser;
 	private Juego juego;
 	private JLabel mainlabel;
-	private User usuario;
-	private Problema problema;
+	//AquíSirveBien
+	
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -42,12 +43,12 @@ public class GUIInicio extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public GUIInicio() {
+	public GUIInicio(String nombre, int dif, int puntos, String password) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 802, 504);
 		bg = new JPanel();
@@ -56,10 +57,16 @@ public class GUIInicio extends JFrame {
 		setContentPane(bg);
 		bg.setLayout(null);
 		enviado=false;
-		juego = new Juego();
-		juego.generarLista("src/prueba.csv");
+		juego = new Juego(nombre,dif,puntos,password);
+		juego.generarLista("prueba.csv");
 		Image corazon= new ImageIcon(this.getClass().getResource("vida1.png")).getImage();
-		usuario=new User("Raul",2,2);
+		
+		JTextArea ranktext = new JTextArea();
+		ranktext.setBounds(393, 79, 347, 297);
+		bg.add(ranktext);
+		ranktext.setBackground(new Color(40,40,40));
+		ranktext.setForeground(Color.WHITE);
+		ranktext.setVisible(false);
 		
 		
 		JLabel enviartxt = new JLabel("Enviar");
@@ -108,6 +115,20 @@ public class GUIInicio extends JFrame {
 		bg.add(panel2);
 		panel2.setBackground(new Color(40,40,40));
 		panel2.setLayout(null);
+		
+		JPanel rank = new JPanel();
+		
+		rank.setBounds(30, 29, 216, 77);
+		panel2.add(rank);
+		rank.setBackground(new Color(225,173,1));
+		rank.setLayout(null);
+		
+		JLabel lblRanking = new JLabel("Ranking");
+		lblRanking.setBounds(65, 37, 80, 18);
+		lblRanking.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRanking.setForeground(Color.WHITE);
+		lblRanking.setFont(new Font("Roboto Black", Font.PLAIN, 15));
+		rank.add(lblRanking);
 		
 		JPanel panel3 = new JPanel();
 		panel3.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -238,6 +259,7 @@ public class GUIInicio extends JFrame {
 		nextpanel.setBackground(new Color(225,173,1));
 		bg.add(nextpanel);
 		nextpanel.setLayout(null);
+		nextpanel.setVisible(false);
 		
 		JLabel nexttxt = new JLabel("Siguiente");
 		nexttxt.setForeground(Color.WHITE);
@@ -249,7 +271,7 @@ public class GUIInicio extends JFrame {
 		respcorrecta.setHorizontalAlignment(SwingConstants.CENTER);
 		respcorrecta.setForeground(Color.WHITE);
 		respcorrecta.setFont(new Font("Roboto Black", Font.PLAIN, 15));
-		respcorrecta.setBounds(231, 166, 256, 103);
+		respcorrecta.setBounds(56, 303, 256, 103);
 		bg.add(respcorrecta);
 		
 		JLabel corrctostxt = new JLabel(" ");
@@ -258,7 +280,7 @@ public class GUIInicio extends JFrame {
 		corrctostxt.setFont(new Font("Roboto Black", Font.PLAIN, 15));
 		corrctostxt.setBounds(10, 50, 110, 30);
 		bg.add(corrctostxt);
-		corrctostxt.setText("Correctas: "+usuario.totalCorrectos().toString());
+		corrctostxt.setText("Correctas: "+juego.usuarioCorrecto().toString());
 		corrctostxt.setVisible(false);
 		
 		JLabel vida = new JLabel("");
@@ -274,7 +296,7 @@ public class GUIInicio extends JFrame {
 		score.setFont(new Font("Roboto Black", Font.PLAIN, 18));
 		score.setBounds(10, 419, 118, 48);
 		bg.add(score);
-		score.setText("Score: "+usuario.getScore().toString());
+		score.setText("Score: "+juego.usurioScore().toString());
 		
 		JLabel modotxt = new JLabel("Cambiar color:");
 		modotxt.setForeground(Color.WHITE);
@@ -293,6 +315,8 @@ public class GUIInicio extends JFrame {
 					panel1.setBackground(new Color(215,215,215));
 					panel2.setBackground(new Color(215,215,215));
 					panel3.setBackground(new Color(215,215,215));
+					ranktext.setBackground(new Color(215,215,215));
+					ranktext.setForeground(Color.BLACK);
 					lvl1panel.setBackground(new Color(11,11,69));
 					lvl2panel.setBackground(new Color(11,11,69));
 					lvl3panel.setBackground(new Color(11,11,69));
@@ -300,6 +324,8 @@ public class GUIInicio extends JFrame {
 					lvl5panel.setBackground(new Color(11,11,69));
 					selecniv.setBackground(new Color(11,11,69));
 					nextpanel.setBackground(new Color(11,11,69));
+					rank.setBackground(new Color(11,11,69));
+					
 					matechiletxt.setForeground(Color.BLACK);
 					respcorrecta.setForeground(Color.BLACK);
 					respuestauser.setBackground(Color.BLACK);
@@ -316,12 +342,15 @@ public class GUIInicio extends JFrame {
 					panel1.setBackground(new Color(40,40,40));
 					panel2.setBackground(new Color(40,40,40));
 					panel3.setBackground(new Color(40,40,40));
+					ranktext.setBackground(new Color(40,40,40));
+					ranktext.setForeground(Color.WHITE);
 					lvl1panel.setBackground(new Color(225,173,1));
 					lvl2panel.setBackground(new Color(225,173,1));
 					lvl3panel.setBackground(new Color(225,173,1));
 					lvl4panel.setBackground(new Color(225,173,1));
 					lvl5panel.setBackground(new Color(225,173,1));
 					selecniv.setBackground(new Color(225,173,1));
+					rank.setBackground(new Color(225,173,1));
 					matechiletxt.setForeground(Color.WHITE);
 					respuestauser.setBackground(Color.WHITE);
 					enviar.setBackground(new Color(225,173,1));
@@ -375,23 +404,23 @@ public class GUIInicio extends JFrame {
 			}
 			public void mouseClicked(MouseEvent e) {
 				ocultar();
-				
-				usuario.limpiar();
+				nextpanel.setVisible(true);
+				juego.limpiarUsuario();
 				juego.reiniciar();
 				enviar.setVisible(true);
 				enviartxt.setVisible(true);
 				respuestauser.setVisible(true);
-				juego.setDificultad(usuario.getNivel());
-				 problema= juego.seleccionarProblema(usuario.getNivel());
+				juego.setDificultad(juego.usuarioNivel());
+				 juego.cambiarProblema();
 				 mainlabel.setForeground(Color.BLACK);
-				 mainlabel.setText(problema.getProblema());
-				corrctostxt.setText("Correctas: "+usuario.totalCorrectos().toString());
+				 mainlabel.setText(juego.textoProblema());
+				corrctostxt.setText("Correctas: "+juego.usuarioCorrecto().toString());
 				vida.setText("Vidas: "+juego.getVidas().toString());
 				vida.setVisible(true);
 				corrctostxt.setVisible(true);
-				problema= juego.seleccionarProblema(usuario.getNivel());
+				juego.cambiarProblema();
 				mainlabel.setForeground(Color.WHITE);
-				mainlabel.setText(problema.getProblema());
+				mainlabel.setText(juego.textoProblema());
 				respuestauser.setText("");
 				respcorrecta.setText("");
 				
@@ -471,36 +500,50 @@ public class GUIInicio extends JFrame {
 				
 			}
 		});
+		rank.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				imagenmate.setVisible(false);
+				ranktext.setVisible(true);
+				ranktext.setText(juego.mejores());
+				
+			}
+		});
 		enviar.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent e) {
 				String resp= respuestauser.getText();
 				
-				score.setText("Score: "+usuario.getScore().toString());
-				if(juego.correcto(resp,problema )==true && enviado!=true) {
+				score.setText("Score: "+juego.usurioScore().toString());
+				if(juego.correcto(resp )==true && enviado!=true) {
 					mainlabel.setForeground(Color.GREEN);
 					mainlabel.setText("Correcto");
-					usuario.addProblemasCorrctos(problema);
-					corrctostxt.setText("Correctas: "+usuario.totalCorrectos().toString());
-					if(usuario.totalCorrectos()>usuario.getScore()) {
-						usuario.setScore(usuario.totalCorrectos());
+					juego.addCorrecto();
+					corrctostxt.setText("Correctas: "+juego.usuarioCorrecto().toString());
+					if(juego.usuarioCorrecto()>=juego.usurioScore()) {
+						juego.ponerScore();
+						score.setText("Score: "+juego.usurioScore().toString());
 					}
 					enviado=true;
 					}
 				else if(juego.getVidas()!=0 && enviado!=true) {
 					mainlabel.setForeground(Color.RED);
 					mainlabel.setText("Incorrecto");
-					respcorrecta.setText("Respuesta correcta: "+problema.getSolucion());
-					usuario.addProblemasIncorrctos(problema);
+					respcorrecta.setText("Respuesta correcta: "+juego.tomarSol());
+					juego.addIncorrecto();
 					juego.quitarVida();
 					vida.setText("Vidas: "+juego.getVidas().toString());
 					
 					if(juego.getVidas()==0) {
-						
+						enviado=false;
 						segundogrado.setText("Jugar de nuevo");
 						panel3.setVisible(true);
 						lvl2panel.setVisible(true);
 						segundogrado.setVisible(true);
+						if(juego.usuarioCorrecto()>=juego.usurioScore()) {
+							juego.guardarScore();
+						}
+						
 	;				}
 					enviado=true;
 				}
@@ -510,9 +553,9 @@ public class GUIInicio extends JFrame {
 		nextpanel.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent e) {
-				problema= juego.seleccionarProblema(usuario.getNivel());
+				juego.cambiarProblema();
 				mainlabel.setForeground(Color.WHITE);
-				mainlabel.setText(problema.getProblema());
+				mainlabel.setText(juego.textoProblema());
 				respuestauser.setText("");
 				respcorrecta.setText("");
 				enviado=false;
@@ -522,6 +565,7 @@ public class GUIInicio extends JFrame {
 			
 			public void mouseClicked(MouseEvent e) {
 				imagenmate.setVisible(false);
+				ranktext.setVisible(false);
 			}
 		});
 		
